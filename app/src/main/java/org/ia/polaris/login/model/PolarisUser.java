@@ -5,10 +5,6 @@ package org.ia.polaris.login.model;
  */
 
 public class PolarisUser implements IUser {
-    public static final int SUCCESS = 0;
-    public static final int NO_USER = -1;
-    public static final int PWD_ERROR = -2;
-    public static final int OTHER_ERROR = -3;
 
     private String username;
     private String password;
@@ -38,7 +34,7 @@ public class PolarisUser implements IUser {
     }
 
     @Override
-    public int checkUserValidate() {
+    public int checkUserValidity() {
         try {
             if ("".equals(username)) {
                 if ("".equals(password)) {
