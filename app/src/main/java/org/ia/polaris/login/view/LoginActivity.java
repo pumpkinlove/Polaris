@@ -7,9 +7,12 @@ import android.widget.EditText;
 
 import org.ia.polaris.BaseActivity;
 import org.ia.polaris.R;
+import org.ia.polaris.login.presenter.ILoginPresenter;
+import org.ia.polaris.login.presenter.LoginPresenterImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity implements ILoginView {
 
@@ -21,6 +24,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     Button btnLogin;
 
     ProgressDialog progressDialog;
+    ILoginPresenter loginPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +37,14 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     }
 
+    @OnClick(R.id.btn_login)
+    void onLoginClicked() {
+        loginPresenter.login(etUsername.getText().toString(), etPassword.getText().toString());
+    }
+
     @Override
     protected void initData() {
-
+        loginPresenter = new LoginPresenterImpl(this);
     }
 
     @Override
