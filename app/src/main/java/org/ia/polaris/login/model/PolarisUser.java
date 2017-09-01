@@ -4,7 +4,7 @@ package org.ia.polaris.login.model;
  * Created by xu.nan on 2017/8/31.
  */
 
-public class PolarisUser implements IUser {
+public class PolarisUser implements IUserBiz {
 
     private String username;
     private String password;
@@ -36,6 +36,7 @@ public class PolarisUser implements IUser {
     @Override
     public int checkUserValidity() {
         try {
+            Thread.sleep(3000);
             if ("".equals(username)) {
                 if ("".equals(password)) {
                     return SUCCESS;

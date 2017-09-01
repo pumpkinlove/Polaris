@@ -6,6 +6,4 @@ package org.ia.polaris.login.presenter;
 
 public interface ILoginPresenter {
     void login(String username, String password);
-    void clear();
-    void setPbVisibility(boolean show);
 }

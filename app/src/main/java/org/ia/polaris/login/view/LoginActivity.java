@@ -1,14 +1,17 @@
 package org.ia.polaris.login.view;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.ia.polaris.BaseActivity;
 import org.ia.polaris.R;
 import org.ia.polaris.login.presenter.ILoginPresenter;
 import org.ia.polaris.login.presenter.LoginPresenterImpl;
+import org.ia.polaris.main.view.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,25 +55,37 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         ButterKnife.bind(this);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("正在登录...");
+        progressDialog.setCancelable(false);
     }
 
     @Override
-    public void onClearInfo() {
+    public void clearUsername() {
         etUsername.setText("");
+    }
+
+    @Override
+    public void clearPassword() {
         etPassword.setText("");
     }
 
     @Override
-    public void onLoginResult(boolean result, int code) {
-
+    public void showPd() {
+        progressDialog.show();
     }
 
     @Override
-    public void onSetPbVisibility(boolean show) {
-        if (show) {
-            progressDialog.show();
-        } else {
-            progressDialog.dismiss();
-        }
+    public void hidePd() {
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void showErrorInfo() {
+        Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void toMainActivity() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }

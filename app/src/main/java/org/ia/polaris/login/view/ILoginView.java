@@ -5,7 +5,10 @@ package org.ia.polaris.login.view;
  */
 
 public interface ILoginView {
-    void onClearInfo();
-    void onLoginResult(boolean result, int code);
-    void onSetPbVisibility(boolean show);
+    void clearUsername();
+    void clearPassword();
+    void showPd();
+    void hidePd();
+    void showErrorInfo();
+    void toMainActivity();
 }
