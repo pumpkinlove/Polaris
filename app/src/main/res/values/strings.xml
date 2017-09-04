@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Polaris</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="login">登 入</string>
+    <string name="register">注 册</string>
+    <string name="input_pwd">请填写密码</string>
+    <string name="pwd">密码</string>
+    <string name="_86">+86 </string>
+    <string name="phone_num">手机号</string>
+    <string name="input_phone_num">请填写手机号码</string>
+
 </resources>
