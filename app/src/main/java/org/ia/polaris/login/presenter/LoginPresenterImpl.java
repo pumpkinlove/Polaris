@@ -40,11 +40,11 @@ public class LoginPresenterImpl implements ILoginPresenter {
                     @Override
                     public void accept(Integer loginResult) throws Exception {
                         iLoginView.hidePd();
-//                        if (0 == loginResult) {
+                        if (0 == loginResult) {
                             iLoginView.toMainActivity();
-//                        } else {
-//                            iLoginView.showErrorInfo();
-//                        }
+                        } else {
+                            iLoginView.showErrorInfo();
+                        }
                     }
                 });
 

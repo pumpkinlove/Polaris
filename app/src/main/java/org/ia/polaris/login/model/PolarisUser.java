@@ -36,15 +36,16 @@ public class PolarisUser implements IUserBiz {
     @Override
     public int checkUserValidity() {
         try {
-            Thread.sleep(3000);
-            if ("".equals(username)) {
-                if ("".equals(password)) {
-                    return SUCCESS;
-                }
-                return PWD_ERROR;
-            } else {
-                return NO_USER;
-            }
+            Thread.sleep(1000);
+            return SUCCESS;
+//            if ("".equals(username)) {
+//                if ("".equals(password)) {
+//                    return SUCCESS;
+//                }
+//                return PWD_ERROR;
+//            } else {
+//                return NO_USER;
+//            }
         } catch (Exception e) {
             return OTHER_ERROR;
         }

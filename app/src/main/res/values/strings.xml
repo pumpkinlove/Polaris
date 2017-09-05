@@ -7,5 +7,12 @@
     <string name="_86">+86 </string>
     <string name="phone_num">手机号</string>
     <string name="input_phone_num">请填写手机号码</string>
+    <string name="openDrawerDesc">打开选项卡</string>
+    <string name="closeDrawerDesc">关闭选项卡</string>
+    <string name="home_page">首页</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="system_config">系统设置</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
