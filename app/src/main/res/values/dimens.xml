@@ -14,5 +14,6 @@
     <dimen name="topic_card_padding_vertical">10dp</dimen>
     <dimen name="topic_card_padding_horizontal">10dp</dimen>
     <dimen name="topic_card_title_font_size">17sp</dimen>
+    <dimen name="main_image_switcher_height">165dp</dimen>
 
 </resources>

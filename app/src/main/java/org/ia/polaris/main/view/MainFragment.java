@@ -26,6 +26,10 @@ import butterknife.Unbinder;
  */
 public class MainFragment extends Fragment {
 
+    private String picUrl1 = "https://pic1.zhimg.com/v2-909e900716442a4b177b812bb941f5a0.jpg";
+    private String picUrl2 = "https://pic2.zhimg.com/v2-9a9360c045261e816a69a0ae7428e15d.jpg";
+    private String picUrl3 = "https://pic1.zhimg.com/v2-4b0ba46aac6c6f755ee0b8c250b8f75c.jpg";
+    private String picUrl4 = "https://pic3.zhimg.com/v2-fcff7b50dff2e90af1bc0af0c83a3d36.jpg";
 
     @BindView(R.id.rv_topic_card)
     RecyclerView rvTopicCard;
