@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.ia.polaris.R;
 import org.ia.polaris.main.adapter.TopicCardAdapter;
@@ -30,6 +31,9 @@ public class MainFragment extends Fragment {
     private String picUrl2 = "https://pic2.zhimg.com/v2-9a9360c045261e816a69a0ae7428e15d.jpg";
     private String picUrl3 = "https://pic1.zhimg.com/v2-4b0ba46aac6c6f755ee0b8c250b8f75c.jpg";
     private String picUrl4 = "https://pic3.zhimg.com/v2-fcff7b50dff2e90af1bc0af0c83a3d36.jpg";
+    private String picUrl5 = "https://pic1.zhimg.com/v2-19cfcb102b2c7f6989bc61e18e21bc64.jpg";
+
+    private String[] picUrls = {picUrl4, picUrl3, picUrl2, picUrl1,picUrl5};
 
     @BindView(R.id.rv_topic_card)
     RecyclerView rvTopicCard;
@@ -58,10 +62,31 @@ public class MainFragment extends Fragment {
         List<TopicCard> mCardList = new ArrayList<>();
         for (int i=0; i<15; i++) {
             TopicCard card = new TopicCard();
-            card.setTitle("被孩子的 为什么为什么为什么 问得焦头烂额，忍住，千万忍住");
+            card.setTitle("测试文章标题 " + i);
+            if (i < 6) {
+                card.setDate("09月07日 星期四");
+            } else if (i < 10) {
+                card.setDate("09月06日 星期三");
+            } else {
+                card.setDate("09月05日 星期二");
+            }
             mCardList.add(card);
         }
-        TopicCardAdapter adapter = new TopicCardAdapter(getContext(), mCardList);
+
+        List<TopicCard> mHeadCardList = new ArrayList<>();
+        for (int i=0; i<5; i++) {
+            TopicCard card = new TopicCard();
+            card.setTitle("被孩子的『为什么为什么为什么』问得焦头烂额，忍住，千万忍住");
+            card.setPicture(picUrls[i]);
+            mHeadCardList.add(card);
+        }
+
+        TopicCardAdapter adapter = new TopicCardAdapter(getContext(), mCardList, mHeadCardList, new TopicCardAdapter.TopicClickListener() {
+            @Override
+            public void onTopicClicked(View view, int position) {
+                Toast.makeText(getContext(), "position : " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         rvTopicCard.setAdapter(adapter);
         rvTopicCard.setLayoutManager(new LinearLayoutManager(getContext()));
     }
