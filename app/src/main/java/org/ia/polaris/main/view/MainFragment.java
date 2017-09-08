@@ -3,7 +3,9 @@ package org.ia.polaris.main.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,11 +23,26 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+    @BindView(R.id.srl_main)
+    SwipeRefreshLayout srlMain;
+
+    @BindView(R.id.rv_topic_card)
+    RecyclerView rvTopicCard;
+    Unbinder unbinder;
 
     private String picUrl1 = "https://pic1.zhimg.com/v2-909e900716442a4b177b812bb941f5a0.jpg";
     private String picUrl2 = "https://pic2.zhimg.com/v2-9a9360c045261e816a69a0ae7428e15d.jpg";
@@ -33,11 +50,7 @@ public class MainFragment extends Fragment {
     private String picUrl4 = "https://pic3.zhimg.com/v2-fcff7b50dff2e90af1bc0af0c83a3d36.jpg";
     private String picUrl5 = "https://pic1.zhimg.com/v2-19cfcb102b2c7f6989bc61e18e21bc64.jpg";
 
-    private String[] picUrls = {picUrl4, picUrl3, picUrl2, picUrl1,picUrl5};
-
-    @BindView(R.id.rv_topic_card)
-    RecyclerView rvTopicCard;
-    Unbinder unbinder;
+    private String[] picUrls = {picUrl4, picUrl3, picUrl2, picUrl1, picUrl5};
 
     public MainFragment() {
         // Required empty public constructor
@@ -55,12 +68,23 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initData();
+        initView();
+
         testView();
+    }
+
+    private void initData() {
+
+    }
+
+    private void initView() {
+        srlMain.setOnRefreshListener(this);
     }
 
     void testView() {
         List<TopicCard> mCardList = new ArrayList<>();
-        for (int i=0; i<15; i++) {
+        for (int i = 0; i < 15; i++) {
             TopicCard card = new TopicCard();
             card.setTitle("测试文章标题 " + i);
             if (i < 6) {
@@ -74,7 +98,7 @@ public class MainFragment extends Fragment {
         }
 
         List<TopicCard> mHeadCardList = new ArrayList<>();
-        for (int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             TopicCard card = new TopicCard();
             card.setTitle("被孩子的『为什么为什么为什么』问得焦头烂额，忍住，千万忍住");
             card.setPicture(picUrls[i]);
@@ -89,11 +113,82 @@ public class MainFragment extends Fragment {
         });
         rvTopicCard.setAdapter(adapter);
         rvTopicCard.setLayoutManager(new LinearLayoutManager(getContext()));
+        initLoadMoreListener(adapter);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onRefresh() {
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> e) {
+                try {
+                    Thread.sleep(500);
+                    e.onNext("refresh");
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        srlMain.setRefreshing(false);
+                    }
+                });
+
+    }
+
+    private void initLoadMoreListener(final RecyclerView.Adapter adapter) {
+
+        rvTopicCard.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int lastVisibleItem ;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                //判断RecyclerView的状态 是空闲时，同时，是最后一个可见的ITEM时才加载
+                if(newState==RecyclerView.SCROLL_STATE_IDLE&&lastVisibleItem+1 == adapter.getItemCount()){
+                    Observable.create(new ObservableOnSubscribe<String>() {
+                        @Override
+                        public void subscribe(@NonNull ObservableEmitter<String> e) {
+                            try {
+                                Thread.sleep(500);
+                                e.onNext("loadMore");
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<String>() {
+                                @Override
+                                public void accept(String s) throws Exception {
+                                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                //最后一个可见的ITEM
+                lastVisibleItem=layoutManager.findLastVisibleItemPosition();
+            }
+        });
+
     }
 }
