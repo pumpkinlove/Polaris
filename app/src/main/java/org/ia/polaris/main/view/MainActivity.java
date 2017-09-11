@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initToggle();
         initNavigation();
 
-        getFragmentManager().beginTransaction().replace(R.id.fl_main, new MainFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fl_main, new HomePageFragment()).commit();
 
     }
 

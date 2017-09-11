@@ -3,7 +3,6 @@ package org.ia.polaris.main.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +25,6 @@ import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -35,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomePageFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.srl_main)
     SwipeRefreshLayout srlMain;
@@ -52,7 +50,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private String[] picUrls = {picUrl4, picUrl3, picUrl2, picUrl1, picUrl5};
 
-    public MainFragment() {
+    public HomePageFragment() {
         // Required empty public constructor
     }
 
@@ -60,7 +58,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
