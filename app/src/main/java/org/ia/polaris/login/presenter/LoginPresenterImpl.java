@@ -1,6 +1,7 @@
 package org.ia.polaris.login.presenter;
 
-import org.ia.polaris.login.model.IUserBiz;
+import org.ia.polaris.login.model.Callback;
+import org.ia.polaris.login.model.IUserModel;
 import org.ia.polaris.login.model.PolarisUser;
 import org.ia.polaris.login.view.ILoginView;
 
@@ -16,38 +17,27 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class LoginPresenterImpl implements ILoginPresenter {
-    ILoginView iLoginView;
-    IUserBiz user;
+    ILoginView loginView;
+    IUserModel userModel;
 
-    public LoginPresenterImpl(ILoginView iLoginView) {
-        this.iLoginView = iLoginView;
+    public LoginPresenterImpl(ILoginView loginView) {
+        this.loginView = loginView;
+        userModel = new PolarisUser();
     }
 
     @Override
     public void login(String username, String password) {
-        iLoginView.showPd();
-        user = new PolarisUser(username, password);
-        Observable.just(user)
-                .map(new Function<IUserBiz, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull IUserBiz iUserBiz) throws Exception {
-                        return iUserBiz.checkUserValidity();
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer loginResult) throws Exception {
-                        iLoginView.hidePd();
-                        if (0 == loginResult) {
-                            iLoginView.toMainActivity();
-                        } else {
-                            iLoginView.showErrorInfo();
-                        }
-                    }
-                });
+        userModel.login(username, password, new Callback() {
+            @Override
+            public void onSuccess() {
 
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
 }

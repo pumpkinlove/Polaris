@@ -1,10 +1,19 @@
 package org.ia.polaris.login.model;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by xu.nan on 2017/8/31.
  */
 
-public class PolarisUser implements IUserBiz {
+public class PolarisUser implements IUserModel {
 
     private String username;
     private String password;
@@ -34,20 +43,30 @@ public class PolarisUser implements IUserBiz {
     }
 
     @Override
-    public int checkUserValidity() {
-        try {
-            Thread.sleep(1000);
-            return SUCCESS;
-//            if ("".equals(username)) {
-//                if ("".equals(password)) {
-//                    return SUCCESS;
-//                }
-//                return PWD_ERROR;
-//            } else {
-//                return NO_USER;
-//            }
-        } catch (Exception e) {
-            return OTHER_ERROR;
-        }
+    public void login(String username, String password, final Callback callback) {
+        this.username = username;
+        this.password = password;
+
+        Observable
+                .just(this)
+                .map(new Function<PolarisUser, String>() {
+                    @Override
+                    public String apply(@NonNull PolarisUser user) throws Exception {
+                        return user.username;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        callback.onSuccess();
+                    }
+                });
+    }
+
+    @Override
+    public void register() {
+
     }
 }
