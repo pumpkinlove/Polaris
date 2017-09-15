@@ -9,9 +9,7 @@ public interface IMainPresenter {
     void loadUserInfo();
     void loadContentType();
     void offLineLoading();
-
-
-
-
+    void checkIsLogin();
+    void loadTopicByType(String type);
 
 }

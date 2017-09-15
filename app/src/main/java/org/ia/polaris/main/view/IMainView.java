@@ -1,12 +1,16 @@
 package org.ia.polaris.main.view;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by xu.nan on 2017/9/11.
  */
 
 public interface IMainView {
 
-    void toLogin();
+    void toUserView();
+    void toUserInfoView();
+
     void toConfig();
     void nightMode();
 
@@ -16,6 +20,10 @@ public interface IMainView {
     void toMyCollection();
     void onOffLineLoading();
 
-    void showUserInfo();
+    void showUserInfo(Bitmap userIcon, String username);
+    void showNotLogin();
+
+    void openDrawer();
+    void closeDrawer();
 
 }

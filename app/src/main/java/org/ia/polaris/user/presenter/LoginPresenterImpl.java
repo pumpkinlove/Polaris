@@ -1,16 +1,9 @@
-package org.ia.polaris.login.presenter;
+package org.ia.polaris.user.presenter;
 
-import org.ia.polaris.login.model.Callback;
-import org.ia.polaris.login.model.IUserModel;
-import org.ia.polaris.login.model.PolarisUser;
-import org.ia.polaris.login.view.ILoginView;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import org.ia.polaris.user.model.Callback;
+import org.ia.polaris.user.model.IUserModel;
+import org.ia.polaris.user.model.PolarisUser;
+import org.ia.polaris.user.view.ILoginView;
 
 /**
  * Created by xu.nan on 2017/8/31.

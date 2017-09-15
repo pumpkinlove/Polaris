@@ -1,4 +1,4 @@
-package org.ia.polaris.login.presenter;
+package org.ia.polaris.user.presenter;
 
 /**
  * Created by xu.nan on 2017/8/31.

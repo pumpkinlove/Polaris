@@ -1,4 +1,4 @@
-package org.ia.polaris.login.model;
+package org.ia.polaris.user.model;
 
 /**
  * Created by xu.nan on 2017/8/31.
